@@ -130,6 +130,9 @@ cp ../../../sys/arduino/u8g2_page_buffer/MUIBlink/*.ino ../../../../U8g2_Arduino
 mkdir ../../../../U8g2_Arduino/examples/mui/MUIMinimal
 cp ../../../sys/arduino/u8g2_page_buffer/MUIMinimal/*.ino ../../../../U8g2_Arduino/examples/mui/MUIMinimal/.
 
+mkdir ../../../../U8g2_Arduino/examples/mui/MUIInput1BtnBounce2
+cp ../../../sys/arduino/u8g2_page_buffer/MUIInput1BtnBounce2/*.ino ../../../../U8g2_Arduino/examples/mui/MUIInput1BtnBounce2/.
+
 mkdir ../../../../U8g2_Arduino/examples/mui/MUIInput2BtnBounce2
 cp ../../../sys/arduino/u8g2_page_buffer/MUIInput2BtnBounce2/*.ino ../../../../U8g2_Arduino/examples/mui/MUIInput2BtnBounce2/.
 
@@ -150,6 +153,12 @@ cp ../../../sys/arduino/u8g2_page_buffer/MUIStopwatch/*.ino ../../../../U8g2_Ard
 
 mkdir ../../../../U8g2_Arduino/examples/mui/MUICountDown
 cp ../../../sys/arduino/u8g2_page_buffer/MUICountDown/*.ino ../../../../U8g2_Arduino/examples/mui/MUICountDown/.
+
+mkdir ../../../../U8g2_Arduino/examples/mui/MUIWaveformBounce2
+cp ../../../sys/arduino/u8g2_page_buffer/MUIWaveformBounce2/*.ino ../../../../U8g2_Arduino/examples/mui/MUIWaveformBounce2/.
+
+mkdir ../../../../U8g2_Arduino/examples/mui/MUIWaveformSimpleRotary
+cp ../../../sys/arduino/u8g2_page_buffer/MUIWaveformSimpleRotary/*.ino ../../../../U8g2_Arduino/examples/mui/MUIWaveformSimpleRotary/.
 
 # games
 mkdir ../../../../U8g2_Arduino/examples/games/LittleRookChess
@@ -247,6 +256,8 @@ cd ..
 ver=`../u8g2/tools/release/print_release.sh`
 
 sed -i -e "s/version=.*/version=${ver}/" library.properties
+# sed -i -e 's/"version".*/"version": "${ver}",/' library.properties
+sed -i -e "s/.*\"version\".*/  \"version\": \"${ver}\",/" library.json
 
 sed -i -e "s/Download (.*)/Download (${ver})/" README.md
 
@@ -266,6 +277,13 @@ unzip -o u8g2_arduino_${ver}.zip
 
 popd
 
+echo doing local tag and commit with ${ver}
+git tag ${ver}
+git commit -a -m "${ver}"
+echo doing Arduino Repo tag and commit with ${ver}
+cd ~/git/U8g2_Arduino
+git tag ${ver}
+git commit -a -m "${ver}"
 echo now create a release in gitub for U8glib_Arduino, tag/name = ${ver}
 echo no prefix required, release name can be empty
 # Relases in github:

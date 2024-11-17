@@ -4,6 +4,13 @@ set(COMPONENT_ADD_INCLUDEDIRS csrc)
 file(GLOB COMPONENT_SRCS csrc/*.c)
 file(GLOB COMPONENT_HDRS csrc/*.h)
 
+if(COMMAND idf_component_register)
+    idf_component_register(SRCS "${COMPONENT_SRCS}" INCLUDE_DIRS csrc)
+    return()
+endif()
+
+project(u8g2)
+
 if(COMMAND register_component)
     set(COMPONENT_NAME ".")
     register_component()
